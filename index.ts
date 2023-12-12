@@ -1,4 +1,4 @@
-import express, { Request, Response, Application } from "express";
+import express, { Application } from "express";
 import dotenv from "dotenv";
 import mongoose, { ConnectOptions } from "mongoose";
 import bodyParser from "body-parser";
@@ -24,7 +24,9 @@ app.use(bodyParser.json());
 
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/employees", require("./routes/employeeRoutes"));
+app.use("/api/department", require("./routes/departmentRoutes"));
 app.use("/api/role", require("./routes/roleRoutes"));
+app.use("/api/position", require("./routes/positionRoutes"));
 
 app.listen(port, () => {
   console.log(`Server is Fire at http://localhost:${port}`);

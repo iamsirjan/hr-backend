@@ -4,13 +4,16 @@ const router = express.Router();
 import {
   createRole,
   getAllRole,
-  getRoleById,
+  findRoleById,
   updateRole,
   deleteRole,
 } from "../controllers/roleController";
+import { authenticateUser, isAdmin } from "../middleware/authMiddleWare";
 
-router.get("/", getAllRole);
-router.get("/:id", getRoleById);
-router.post("/", createRole);
-router.put("/:id", updateRole);
-router.delete("/:id", deleteRole);
+router.get("/", authenticateUser, getAllRole);
+router.get("/:id", authenticateUser, findRoleById);
+router.post("/", isAdmin, createRole);
+router.put("/:id", isAdmin, updateRole);
+router.delete("/:id", isAdmin, deleteRole);
+
+export = router;

@@ -2,12 +2,13 @@
 import { Document, Schema, model, Model } from "mongoose";
 import { IDepartmentModel } from "./department.model";
 import { IRole } from "./role.model";
+import { IPosition } from "./position.model";
 
-interface Employee extends Document {
+export interface IEmployee extends Document {
   name: string;
   email: string;
   password: string;
-  position: string;
+  position: Schema.Types.ObjectId | IPosition;
   department: Schema.Types.ObjectId | IDepartmentModel; // Reference to the Department model
   phone: string;
   emergencyPhone: string;
@@ -15,10 +16,10 @@ interface Employee extends Document {
   panNumber: string;
   image: string;
   bloodGroup: string;
-  role: Schema.Types.ObjectId | IRole;
+  role: IRole | Schema.Types.ObjectId;
 }
 
-const employeeSchema = new Schema<Employee>({
+const employeeSchema = new Schema<IEmployee>({
   name: {
     type: String,
     required: true,
@@ -32,7 +33,8 @@ const employeeSchema = new Schema<Employee>({
     required: true,
   },
   position: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "Position",
     required: true,
   },
   department: {
@@ -53,4 +55,4 @@ const employeeSchema = new Schema<Employee>({
   },
 });
 
-export default model<Employee>("Employee", employeeSchema);
+export default model<IEmployee>("Employee", employeeSchema);
